@@ -19,13 +19,14 @@ public class Author {
     @Column(nullable = false)
     private String name;
 
-    @Column(name = "birth_date",nullable = false)
-    private String birthDate;
+    @Column(nullable = false)
+    private String birth;
 
     @Column(nullable = false)
     private String country;
 
-    @Column(columnDefinition = "ENUM('Prose', 'Journalist', 'Poet', 'Scientific')", nullable = false)
+    @Column(name = "stile", length = 25)
+    @Enumerated(EnumType.STRING)
     private Stile stile;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
