@@ -22,8 +22,8 @@ public class BookStoreController {
     }
 
     @PostMapping(value = "/authors")
-    public Author add(@RequestBody AuthorDto dto) {
-        return authorService.add(AuthorMapping.toEntity(dto));
+    public Author save(@RequestBody AuthorDto dto) {
+        return authorService.save(dto);
     }
 
     @GetMapping("/authors")
@@ -41,8 +41,8 @@ public class BookStoreController {
     }
 
     @PutMapping("/authors")
-    public Author update(@RequestBody Author author) {
-        return authorService.update(author);
+    public Author update(@RequestBody AuthorDto dto) {
+        return authorService.update(dto);
     }
 
     @DeleteMapping("/authors")

@@ -4,7 +4,7 @@ import com.github.mnemalotebya.bookstore.model.entity.Author;
 
 public class AuthorMapping {
 
-    public static Author toEntity(AuthorDto dto) {
+    public static Author toNewEntity(AuthorDto dto) {
         Author author = new Author();
         author.setName(dto.getName());
         author.setBirth(dto.getBirth());
