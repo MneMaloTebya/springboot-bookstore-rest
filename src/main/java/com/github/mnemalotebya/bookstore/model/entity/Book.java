@@ -1,32 +1,27 @@
 package com.github.mnemalotebya.bookstore.model.entity;
 
-import com.github.mnemalotebya.bookstore.model.Genre;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "books")
-@Data
+@Table(name = "book")
+@Getter
+@Setter
 public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "book_id")
     private int id;
 
-    @Column(nullable = false)
     private String name;
-
-    @Column(name = "date_of_publication", nullable = false)
-    private int dateOfPublication;
-
-    @Column(nullable = false)
-    private int price;
-
-    @Column(columnDefinition = "ENUM('Poems', 'Detective', 'Drama', 'Thriller', 'Horror', 'For_Children')", nullable = false)
-    private Genre genre;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "author_id")
+    @JsonIgnore
     private Author author;
+
 }

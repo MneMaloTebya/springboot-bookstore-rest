@@ -1,9 +1,9 @@
-package com.github.mnemalotebya.bookstore.model.repository;
+package com.github.mnemalotebya.bookstore.model;
 
 import com.github.mnemalotebya.bookstore.model.entity.Author;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AuthorRepository extends JpaRepository<Author, Integer> {
-    void deleteById(int id);
-    Author getAuthorById(int id);
+    Author findById(int id);
+    String deleteById(int id);
 }

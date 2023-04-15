@@ -1,53 +1,55 @@
 package com.github.mnemalotebya.bookstore.controller;
 
-import com.github.mnemalotebya.bookstore.dto.AuthorDto;
-import com.github.mnemalotebya.bookstore.dto.AuthorMapping;
 import com.github.mnemalotebya.bookstore.model.entity.Author;
-import com.github.mnemalotebya.bookstore.service.AuthorService;
+import com.github.mnemalotebya.bookstore.service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
 public class BookStoreController {
 
-    private final AuthorService authorService;
+    private final StoreService storeService;
 
     @Autowired
-    public BookStoreController(AuthorService authorService) {
-        this.authorService = authorService;
-    }
-
-    @PostMapping(value = "/authors")
-    public Author save(@RequestBody AuthorDto dto) {
-        return authorService.save(dto);
+    public BookStoreController(StoreService storeService) {
+        this.storeService = storeService;
     }
 
     @GetMapping("/authors")
-    public List<Author> getAll() {
-        Iterable<Author> iterable = authorService.getAll();
-        List<Author> authors = new ArrayList<>();
-        iterable.forEach(authors::add);
-        return authors;
+    public List<Author> getAllAuthors() {
+        return storeService.getAllAuthors();
+    }
+
+    @GetMapping("/authors/{id}")
+    public Author findAuthorById(@PathVariable int id) {
+        return storeService.findAuthorById(id);
+    }
+
+    @PostMapping("/authors")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Author saveAuthor(@RequestBody Author author) {
+        return storeService.saveAuthor(author);
+    }
+
+    @PutMapping("/authors/{id}")
+    public Author updateAuthor(@PathVariable("id") int id, @RequestBody Author author) {
+        return storeService.updateAuthor(id, author);
     }
 
     @DeleteMapping("/authors/{id}")
-    public String deleteAuthorById(@PathVariable int id) {
-        authorService.deleteById(id);
-        return "The author with id: " + id + " has been deleted";
-    }
-
-    @PutMapping("/authors")
-    public Author update(@RequestBody AuthorDto dto) {
-        return authorService.update(dto);
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAuthorById(@PathVariable("id") int id) {
+        storeService.deleteAuthorById(id);
     }
 
     @DeleteMapping("/authors")
-    public String deleteAllAuthors() {
-        authorService.deleteAll();
-        return "All authors was deleted";
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAllAuthors() {
+        storeService.deleteAllAuthors();
     }
 }
