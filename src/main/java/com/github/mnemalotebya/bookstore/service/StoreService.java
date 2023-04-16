@@ -9,6 +9,6 @@ public interface StoreService {
     Author findAuthorById(int id);
     Author saveAuthor(Author author);
     Author updateAuthor(int id, Author author);
-    void deleteAuthorById(int id);
+    Author deleteAuthorById(int id);
     void deleteAllAuthors();
 }

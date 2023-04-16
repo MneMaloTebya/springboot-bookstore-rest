@@ -8,6 +8,9 @@ public class DtoMapper {
     public static Author AuthorDtoToEntity(AuthorDto dto) {
         Author author = new Author();
         author.setName(dto.getName());
+        author.setBirth(dto.getBirth());
+        author.setCountry(dto.getCountry());
+        author.setStile(dto.getStile());
         author.setBooks(dto.getBooks());
         return author;
     }

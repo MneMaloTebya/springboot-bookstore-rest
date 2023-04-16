@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AuthorRepository extends JpaRepository<Author, Integer> {
     Author findById(int id);
-    String deleteById(int id);
+    Author deleteById(int id);
 }

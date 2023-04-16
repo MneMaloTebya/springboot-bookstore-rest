@@ -7,8 +7,10 @@ import com.github.mnemalotebya.bookstore.service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -23,35 +25,53 @@ public class BookStoreController {
     }
 
     @GetMapping("/authors")
-    public List<Author> getAllAuthors() {
-        return storeService.getAllAuthors();
+    public ResponseEntity<List<Author>> getAllAuthors() {
+        List<Author> authors = storeService.getAllAuthors();
+        if (authors.isEmpty()) {
+            return ResponseEntity.badRequest().body(Collections.emptyList());
+        }
+        return ResponseEntity.ok().body(authors);
     }
 
     @GetMapping("/authors/{id}")
-    public Author findAuthorById(@PathVariable int id) {
-        return storeService.findAuthorById(id);
+    public ResponseEntity<Author> findAuthorById(@PathVariable int id) {
+        Author author = storeService.findAuthorById(id);
+        if (author == null) {
+            return ResponseEntity.badRequest().body(null);
+        }
+        return ResponseEntity.ok().body(storeService.findAuthorById(id));
     }
 
     @PostMapping("/authors")
     @ResponseStatus(HttpStatus.CREATED)
-    public Author saveAuthor(@RequestBody AuthorDto dto) {
-        return storeService.saveAuthor(DtoMapper.AuthorDtoToEntity(dto));
+    public ResponseEntity<Author> saveAuthor(@RequestBody AuthorDto dto) {
+        return ResponseEntity.ok().body(storeService.saveAuthor(DtoMapper.AuthorDtoToEntity(dto)));
     }
 
     @PutMapping("/authors/{id}")
-    public Author updateAuthor(@PathVariable("id") int id, @RequestBody AuthorDto dto) {
-        return storeService.updateAuthor(id, DtoMapper.AuthorDtoToEntity(dto));
+    public ResponseEntity<Author> updateAuthor(@PathVariable("id") int id, @RequestBody AuthorDto dto) {
+        Author author = storeService.findAuthorById(id);
+        if (author == null) {
+            return ResponseEntity.badRequest().body(null);
+        }
+        return ResponseEntity.ok().body(storeService.updateAuthor(id, DtoMapper.AuthorDtoToEntity(dto)));
     }
 
     @DeleteMapping("/authors/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteAuthorById(@PathVariable("id") int id) {
+    public ResponseEntity<Author> deleteAuthorById(@PathVariable("id") int id) {
+        Author author = storeService.findAuthorById(id);
+        if (author == null) {
+            return ResponseEntity.badRequest().body(null);
+        }
         storeService.deleteAuthorById(id);
+        return ResponseEntity.ok().body(author);
     }
 
     @DeleteMapping("/authors")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteAllAuthors() {
+    public ResponseEntity<String> deleteAllAuthors() {
         storeService.deleteAllAuthors();
+        return ResponseEntity.ok().body("All authors was deleted");
     }
 }
