@@ -23,10 +23,17 @@ public class Author {
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Book> books;
 
-    public List<Book> getBooks() {
-        if (books == null) {
-            books = new ArrayList<>();
+    public void setBooks(List<Book> books) {
+        if (this.books == null) {
+            this.books = books;
+        } else {
+            this.books.retainAll(books);
+            this.books.addAll(books);
         }
+    }
+
+    public List<Book> getBooks() {
+        if (books == null) books = new ArrayList<>();
         return books;
     }
 }

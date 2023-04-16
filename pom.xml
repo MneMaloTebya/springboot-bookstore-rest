@@ -11,7 +11,7 @@
 	<groupId>com.github.mnemalotebya</groupId>
 	<artifactId>bookstore</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+
 	<name>Bookstore</name>
 	<description>A test task for a REST client of a bookstore using spring boot technology</description>
 	<properties>
@@ -25,14 +25,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.flywaydb</groupId>
-			<artifactId>flyway-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.flywaydb</groupId>
-			<artifactId>flyway-mysql</artifactId>
 		</dependency>
 
 		<dependency>

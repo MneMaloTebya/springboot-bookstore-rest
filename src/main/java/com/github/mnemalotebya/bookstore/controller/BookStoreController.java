@@ -1,5 +1,7 @@
 package com.github.mnemalotebya.bookstore.controller;
 
+import com.github.mnemalotebya.bookstore.dto.AuthorDto;
+import com.github.mnemalotebya.bookstore.dto.DtoMapper;
 import com.github.mnemalotebya.bookstore.model.entity.Author;
 import com.github.mnemalotebya.bookstore.service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,13 +34,13 @@ public class BookStoreController {
 
     @PostMapping("/authors")
     @ResponseStatus(HttpStatus.CREATED)
-    public Author saveAuthor(@RequestBody Author author) {
-        return storeService.saveAuthor(author);
+    public Author saveAuthor(@RequestBody AuthorDto dto) {
+        return storeService.saveAuthor(DtoMapper.AuthorDtoToEntity(dto));
     }
 
     @PutMapping("/authors/{id}")
-    public Author updateAuthor(@PathVariable("id") int id, @RequestBody Author author) {
-        return storeService.updateAuthor(id, author);
+    public Author updateAuthor(@PathVariable("id") int id, @RequestBody AuthorDto dto) {
+        return storeService.updateAuthor(id, DtoMapper.AuthorDtoToEntity(dto));
     }
 
     @DeleteMapping("/authors/{id}")
